@@ -1,6 +1,8 @@
 package com.yjxw.service.impl;
 
 
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.yjxw.mapper.PostsMapper;
 import com.yjxw.model.AuthorsEntity;
@@ -9,15 +11,16 @@ import com.yjxw.model.vo.PostWithImageAuthor;
 import com.yjxw.service.AuthorsService;
 import com.yjxw.service.PostImagesService;
 import com.yjxw.service.PostsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.yjxw.model.table.PostImagesEntityTableDef.POST_IMAGES_ENTITY;
+import static com.yjxw.model.table.PostsEntityTableDef.POSTS_ENTITY;
 
 /**
  * 存储用户发布的文章信息，包括标题、内容、互动计数等 服务层实现。
@@ -26,6 +29,7 @@ import static com.yjxw.model.table.PostImagesEntityTableDef.POST_IMAGES_ENTITY;
  * @since 1.0
  */
 @Service
+@Slf4j
 public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> implements PostsService {
     @Autowired
     private AuthorsService authorsService;
@@ -54,5 +58,38 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         });
         // 4.返回带图片和作者的文章信息
         return list;
+    }
+
+    /**
+     * 分页查询文章信息包括标题、内容、互动计数、图片、作者等
+     * @param page 分页条件
+     * @return 分页结果
+     */
+    @Override
+    public Page<PostWithImageAuthor> pageWithImageAuthor(Page<PostsEntity> page) {
+        // 1.创建对象
+        Page<PostWithImageAuthor> postWithImageAuthorPage = new Page<>();
+        // 2.分页查询文章数据
+        Page<PostsEntity> postsEntityPage = page(page,new QueryWrapper().orderBy(POSTS_ENTITY.LIKES_COUNT.desc()));
+        // 3.对新对象进行赋值
+        postWithImageAuthorPage.setPageNumber(postsEntityPage.getPageNumber());
+        postWithImageAuthorPage.setPageSize(postsEntityPage.getPageSize());
+        postWithImageAuthorPage.setTotalPage(postsEntityPage.getTotalPage());
+        postWithImageAuthorPage.setTotalRow(postsEntityPage.getTotalRow());
+        // 4.转换PostsEntity到PostWithImageAuthor类型
+        List<PostWithImageAuthor> convertedList = page.getRecords().stream().map((postsEntity)->{
+            System.out.println(postsEntity);
+            PostWithImageAuthor postWithImageAuthor = new PostWithImageAuthor();
+            BeanUtils.copyProperties(postsEntity,postWithImageAuthor);
+            // 查询作者赋值
+            postWithImageAuthor.setAuthor(authorsService.getById(postsEntity.getAuthorId()));
+            // 查询图片并赋值
+            postWithImageAuthor.setImages(new ArrayList<>());
+            postWithImageAuthor.getImages().add(postImagesService.getOne(POST_IMAGES_ENTITY.POST_ID.eq(postsEntity.getPostId())));
+            System.out.println(postWithImageAuthor);
+            return postWithImageAuthor;
+        }).toList();
+        postWithImageAuthorPage.setRecords(convertedList);
+        return postWithImageAuthorPage;
     }
 }

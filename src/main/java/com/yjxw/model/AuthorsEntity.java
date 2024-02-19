@@ -1,12 +1,11 @@
 package com.yjxw.model;
 
-import lombok.Data;
-import lombok.Builder;
-import io.swagger.v3.oas.annotations.media.Schema;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 存储文章作者的基本信息 实体类。
@@ -15,7 +14,6 @@ import com.mybatisflex.annotation.Table;
  * @since 1.0
  */
 @Data
-@Builder
 @Schema(name = "存储文章作者的基本信息")
 @Table(value = "authors")
 public class AuthorsEntity {

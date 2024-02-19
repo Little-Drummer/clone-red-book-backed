@@ -5,6 +5,7 @@ import com.yjxw.model.PostImagesEntity;
 import com.yjxw.model.PostsEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString(callSuper = true)
 public class PostWithImageAuthor extends PostsEntity {
     private List<PostImagesEntity> images = new ArrayList<>();
-    private AuthorsEntity author = AuthorsEntity.builder().build();
+    private AuthorsEntity author = new AuthorsEntity();
 }

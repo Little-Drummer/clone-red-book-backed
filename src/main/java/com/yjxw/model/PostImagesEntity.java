@@ -1,12 +1,11 @@
 package com.yjxw.model;
 
-import lombok.Data;
-import lombok.Builder;
-import io.swagger.v3.oas.annotations.media.Schema;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 存储文章相关图片的信息，每条记录代表一张图片 实体类。
@@ -15,7 +14,6 @@ import com.mybatisflex.annotation.Table;
  * @since 1.0
  */
 @Data
-@Builder
 @Schema(name = "存储文章相关图片的信息，每条记录代表一张图片")
 @Table(value = "post_images")
 public class PostImagesEntity {
@@ -40,6 +38,20 @@ public class PostImagesEntity {
     @Schema(description = "图片的URL链接，存储图片的实际位置")
     @Column(value = "image_url")
     private String imageUrl;
+
+    /**
+     * 图片高度
+     */
+    @Schema(description = "图片的高度")
+    @Column(value = "image_height")
+    private String imageHeight;
+
+    /**
+     * 图片的宽度
+     */
+    @Schema(description = "图片的宽度")
+    @Column(value = "image_width")
+    private String imageWidth;
 
     /**
      * 记录图片添加到数据库的时间

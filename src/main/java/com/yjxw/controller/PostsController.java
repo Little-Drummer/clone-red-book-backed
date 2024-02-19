@@ -125,9 +125,6 @@ public class PostsController {
         } else {
             return Result.error(ResponseConstant.INTERNAL_SERVER_ERROR.getCode(), ResponseConstant.INTERNAL_SERVER_ERROR.getMessage());
         }
-
-
-//        return listWithImageAuthor;
     }
 
 
@@ -146,7 +143,6 @@ public class PostsController {
         return postsService.getById(id);
     }
 
-
     /**
      * 分页查询存储用户发布的文章信息，包括标题、内容、互动计数等
      *
@@ -159,7 +155,12 @@ public class PostsController {
             @Parameter(name = "pageNumber", description = "页码", required = true),
             @Parameter(name = "pageSize", description = "每页大小", required = true)
     })
-    public Page<PostsEntity> page(Page<PostsEntity> page) {
-        return postsService.page(page);
+    public Result<Page<PostWithImageAuthor>> page(Page<PostsEntity> page) {
+        Page<PostWithImageAuthor> postWithImageAuthorPage = postsService.pageWithImageAuthor(page);
+        if (postWithImageAuthorPage != null) {
+            return Result.success(postWithImageAuthorPage);
+        } else {
+            return Result.error(ResponseConstant.INTERNAL_SERVER_ERROR.getCode(), ResponseConstant.INTERNAL_SERVER_ERROR.getMessage());
+        }
     }
 }
