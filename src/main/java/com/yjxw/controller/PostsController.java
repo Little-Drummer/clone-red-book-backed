@@ -134,13 +134,19 @@ public class PostsController {
      * @param id posts主键
      * @return 存储用户发布的文章信息，包括标题、内容、互动计数等详情
      */
-    @GetMapping("/getInfo/{id}")
+    @GetMapping("/{id}")
     @Operation(summary = "根据存储用户发布的文章信息，包括标题、内容、互动计数等主键获取详细信息")
     @Parameters(value = {
             @Parameter(name = "postId", description = "主键，文章的唯一标识符，自动增长", required = true)
     })
-    public PostsEntity getInfo(@PathVariable Serializable id) {
-        return postsService.getById(id);
+    public Result<PostWithImageAuthor> getInfo(@PathVariable Serializable id) {
+
+        PostWithImageAuthor resultById = postsService.getDetailById(id);
+        if (resultById != null) {
+            return Result.success(resultById);
+        } else
+            return Result.error(ResponseConstant.INTERNAL_SERVER_ERROR.getCode(),
+                    ResponseConstant.INTERNAL_SERVER_ERROR.getMessage());
     }
 
     /**

@@ -16,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,27 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
     private AuthorsService authorsService;
     @Autowired
     private PostImagesService postImagesService;
+
+    @Override
+    public PostWithImageAuthor getDetailById(Serializable id) {
+        PostWithImageAuthor postWithImageAuthor = new PostWithImageAuthor();
+        PostsEntity postsEntity = getById(id);
+        if (postsEntity != null) {
+            BeanUtils.copyProperties(postsEntity, postWithImageAuthor);
+            AuthorsEntity authorsEntity = authorsService.getById(postsEntity
+                    .getAuthorId());
+            if (authorsEntity != null) {
+                postWithImageAuthor.setAuthor(authorsEntity);
+            }
+            postWithImageAuthor.setImages(new ArrayList<>());
+            postImagesService.list(POST_IMAGES_ENTITY.POST_ID.eq(postsEntity.getPostId())).forEach(postImagesEntity -> {
+                postWithImageAuthor.getImages().add(postImagesEntity);
+            });
+            return postWithImageAuthor;
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public List<PostWithImageAuthor> listWithImageAuthor() {
@@ -62,6 +84,7 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
 
     /**
      * 分页查询文章信息包括标题、内容、互动计数、图片、作者等
+     *
      * @param page 分页条件
      * @return 分页结果
      */
@@ -70,17 +93,17 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         // 1.创建对象
         Page<PostWithImageAuthor> postWithImageAuthorPage = new Page<>();
         // 2.分页查询文章数据
-        Page<PostsEntity> postsEntityPage = page(page,new QueryWrapper().orderBy(POSTS_ENTITY.LIKES_COUNT.desc()));
+        Page<PostsEntity> postsEntityPage = page(page, new QueryWrapper().orderBy(POSTS_ENTITY.LIKES_COUNT.desc()));
         // 3.对新对象进行赋值
         postWithImageAuthorPage.setPageNumber(postsEntityPage.getPageNumber());
         postWithImageAuthorPage.setPageSize(postsEntityPage.getPageSize());
         postWithImageAuthorPage.setTotalPage(postsEntityPage.getTotalPage());
         postWithImageAuthorPage.setTotalRow(postsEntityPage.getTotalRow());
         // 4.转换PostsEntity到PostWithImageAuthor类型
-        List<PostWithImageAuthor> convertedList = page.getRecords().stream().map((postsEntity)->{
+        List<PostWithImageAuthor> convertedList = page.getRecords().stream().map((postsEntity) -> {
             System.out.println(postsEntity);
             PostWithImageAuthor postWithImageAuthor = new PostWithImageAuthor();
-            BeanUtils.copyProperties(postsEntity,postWithImageAuthor);
+            BeanUtils.copyProperties(postsEntity, postWithImageAuthor);
             // 查询作者赋值
             postWithImageAuthor.setAuthor(authorsService.getById(postsEntity.getAuthorId()));
             // 查询图片并赋值

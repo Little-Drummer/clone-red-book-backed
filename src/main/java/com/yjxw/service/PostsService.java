@@ -6,6 +6,7 @@ import com.mybatisflex.core.service.IService;
 import com.yjxw.model.PostsEntity;
 import com.yjxw.model.vo.PostWithImageAuthor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,6 +16,14 @@ import java.util.List;
  * @since 1.0
  */
 public interface PostsService extends IService<PostsEntity> {
+
+    /**
+     * 根据存储用户发布的文章信息，包括标题、内容、互动计数等主键获取详细信息。
+     *
+     * @param id posts主键
+     * @return 存储用户发布的文章信息，包括标题、内容、互动计数等详情
+     */
+    PostWithImageAuthor getDetailById(Serializable id);
 
 
     /**

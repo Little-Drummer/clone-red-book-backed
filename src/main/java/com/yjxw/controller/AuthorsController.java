@@ -61,7 +61,7 @@ public class AuthorsController {
      * @param id 主键
      * @return {@code true} 删除成功，{@code false} 删除失败
      */
-    @DeleteMapping("/remove/{id}")
+        @DeleteMapping("/remove/{id}")
     @Operation(summary = "根据主键删除存储文章作者的基本信息")
     @Parameters(value = {
             @Parameter(name = "authorId", description = "作者的唯一标识符，主键，自动增长", required = true)
