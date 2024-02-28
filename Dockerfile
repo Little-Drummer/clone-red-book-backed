@@ -1,5 +1,5 @@
 # 阶段一：使用 Maven 镜像构建 Spring Boot 应用
-FROM maven:3.8.4-openjdk-17 AS build
+FROM maven:latest AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
