@@ -4,6 +4,10 @@ spring:
     url: jdbc:mysql://localhost:3306/clone_red_book
     username: root
     password: 123456
+  profiles:
+    active:
+      - qq
+      - token
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
