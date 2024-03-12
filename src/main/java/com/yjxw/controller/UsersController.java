@@ -4,6 +4,7 @@ import com.mybatisflex.core.paginate.Page;
 import com.yjxw.model.Result;
 import com.yjxw.model.UsersEntity;
 import com.yjxw.model.constant.ResponseConstant;
+import com.yjxw.model.dto.UserLoginDTO;
 import com.yjxw.model.dto.UserRegisterDTO;
 import com.yjxw.model.service_response.ServiceResponse;
 import com.yjxw.service.UsersService;
@@ -46,6 +47,23 @@ public class UsersController {
         ServiceResponse response = usersService.register(userRegisterDTO);
         if (response.isSuccess()) {
             return Result.success(response.getMessage());
+        } else {
+            return Result.error(ResponseConstant.INTERNAL_SERVER_ERROR.getCode(), response.getMessage());
+        }
+    }
+    /**
+     * 用户登录
+     */
+    @PostMapping("/login")
+    @Operation(summary = "用户登录")
+    @Parameters(value = {
+            @Parameter(name = "email", description = "电子邮件地址", required = true),
+            @Parameter(name = "password", description = "密码", required = true)
+    })
+    public Result<Object> login(@RequestBody @Validated UserLoginDTO userLoginDTO) {
+        ServiceResponse response = usersService.login(userLoginDTO);
+        if (response.isSuccess()) {
+            return Result.success(response.getMessage(), response.getData());
         } else {
             return Result.error(ResponseConstant.INTERNAL_SERVER_ERROR.getCode(), response.getMessage());
         }

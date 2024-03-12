@@ -7,6 +7,7 @@
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="gender" jdbcType="TINYINT" property="gender"/>
         <result column="bio" jdbcType="CLOB" property="bio"/>
         <result column="profile_picture_url" jdbcType="VARCHAR" property="profilePictureUrl"/>
         <result column="user_type" jdbcType="TINYINT" property="userType"/>
@@ -15,7 +16,7 @@
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
     </resultMap>
     <sql id="Base_Column_List">
-        `user_id`, `email`, `name`, `bio`, `profile_picture_url`, `user_type`, `user_password`, `created_at`, `updated_at`
+        `user_id`, `email`, `name`,`gender`, `bio`, `profile_picture_url`, `user_type`, `user_password`, `created_at`, `updated_at`
     </sql>
 
 </mapper>

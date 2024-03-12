@@ -27,6 +27,7 @@ public class UsersEntity {
     @Id(keyType = KeyType.Auto)
     private Integer userId;
 
+
     /**
      * 电子邮件地址
      */
@@ -40,6 +41,14 @@ public class UsersEntity {
     @Schema(description = "姓名")
     @Column(value = "name")
     private String name;
+
+
+    /**
+     * 性别
+     */
+    @Schema(description = "性别")
+    @Column(value="gender")
+    private Integer gender;
 
     /**
      * 个人简介
@@ -61,6 +70,7 @@ public class UsersEntity {
     @Schema(description = "用户类型：0表示普通用户，1表示管理员等")
     @Column(value = "user_type")
     private Integer userType;
+
 
     /**
      * 用户密码

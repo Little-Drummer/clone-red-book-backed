@@ -5,7 +5,9 @@ spring:
     username: root
     password: 123456
   profiles:
-    active: qq
+    active:
+      - qq
+      - token
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
