@@ -1,0 +1,20 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 1085561450@qq.com
+    port: 587
+    password: 'galrgjcfclwufgha'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+#          connectiontimeout: 5000
+#          timeout: 3000
+#          writetimeout: 5000
+mail:
+  domain: qq.com
+  from: 1085561450@qq.com
