@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CloneRedBookBackEndApplication {
 
     public static void main(String[] args) {
-        log.info("项目开始启动...1");
+        log.info("项目开始启动...2");
         SpringApplication.run(CloneRedBookBackEndApplication.class, args);
     }
 
