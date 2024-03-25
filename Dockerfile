@@ -20,4 +20,4 @@ COPY --from=build /home/app/target/clone-red-book-back-end-0.0.1-SNAPSHOT.jar /h
 EXPOSE 8080
 
 # 配置容器启动时执行的命令
-ENTRYPOINT ["java","-jar","/home/app.jar"]
+ENTRYPOINT ["java","-jar","/home/app.jar","--spring.profiles.active=prod"]
