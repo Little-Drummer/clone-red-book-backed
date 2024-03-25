@@ -36,3 +36,6 @@ knife4j:
     language: zh_cn
 sa-token:
   jwt-secret-key: ${JWT_SECRET_KEY}
+mail:
+  domain: qq.com
+  from: 1085561450@qq.com
