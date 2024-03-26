@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 @Tag(name = "存储用户发布的文章信息，包括标题、内容、互动计数等控制层")
+@Slf4j
 public class PostsController {
 
     @Autowired
@@ -162,6 +164,7 @@ public class PostsController {
             @Parameter(name = "pageSize", description = "每页大小", required = true)
     })
     public Result<Page<PostWithImageAuthor>> page(Page<PostsEntity> page) {
+        log.info("分页参数{}",page);
         Page<PostWithImageAuthor> postWithImageAuthorPage = postsService.pageWithImageAuthor(page);
         if (postWithImageAuthorPage != null) {
             return Result.success(postWithImageAuthorPage);
