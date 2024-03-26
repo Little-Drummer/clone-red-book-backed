@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.yjxw</groupId>
     <artifactId>clone-red-book-back-end</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>clone-red-book-back-end</name>
     <description>clone-red-book-back-end</description>
     <properties>
