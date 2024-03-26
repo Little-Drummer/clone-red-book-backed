@@ -14,7 +14,7 @@ LABEL maintainer="w1085561450@gmail.com"
 #WORKDIR /app
 
 # 将构建好的jar文件复制到镜像中
-COPY --from=build /home/app/target/clone-red-book-back-end-0.0.1-SNAPSHOT.jar /home/app.jar
+COPY --from=build /home/app/target/*.jar /home/app.jar
 
 # 声明运行时容器将监听8080端口
 EXPOSE 8080
