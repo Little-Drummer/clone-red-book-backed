@@ -90,12 +90,12 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
      */
     @Override
     public Page<PostWithImageAuthor> pageWithImageAuthor(Page<PostsEntity> page) {
-        log.info("{}",page);
+//        log.info("{}",page);
         // 1.创建对象
         Page<PostWithImageAuthor> postWithImageAuthorPage = new Page<>();
         // 2.分页查询文章数据
         Page<PostsEntity> postsEntityPage = page(page, new QueryWrapper().orderBy(POSTS_ENTITY.LIKES_COUNT.desc()));
-        log.info("{}",postsEntityPage);
+//        log.info("{}",postsEntityPage);
         // 3.对新对象进行赋值
         postWithImageAuthorPage.setPageNumber(postsEntityPage.getPageNumber());
         postWithImageAuthorPage.setPageSize(postsEntityPage.getPageSize());

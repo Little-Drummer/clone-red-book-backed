@@ -164,7 +164,6 @@ public class PostsController {
             @Parameter(name = "pageSize", description = "每页大小", required = true)
     })
     public Result<Page<PostWithImageAuthor>> page(Page<PostsEntity> page) {
-        log.info("分页参数{}",page);
         Page<PostWithImageAuthor> postWithImageAuthorPage = postsService.pageWithImageAuthor(page);
         if (postWithImageAuthorPage != null) {
             return Result.success(postWithImageAuthorPage);
