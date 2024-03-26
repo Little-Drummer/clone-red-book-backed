@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.yjxw</groupId>
-    <artifactId>clone-red-book-back-end</artifactId>
+    <artifactId>red-interview-api</artifactId>
     <version>0.0.2-SNAPSHOT</version>
-    <name>clone-red-book-back-end</name>
-    <description>clone-red-book-back-end</description>
+    <name>red-interview-api</name>
+    <description>red-interview-api</description>
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -90,10 +90,12 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
      */
     @Override
     public Page<PostWithImageAuthor> pageWithImageAuthor(Page<PostsEntity> page) {
+        log.info("{}",page);
         // 1.创建对象
         Page<PostWithImageAuthor> postWithImageAuthorPage = new Page<>();
         // 2.分页查询文章数据
         Page<PostsEntity> postsEntityPage = page(page, new QueryWrapper().orderBy(POSTS_ENTITY.LIKES_COUNT.desc()));
+        log.info("{}",postsEntityPage);
         // 3.对新对象进行赋值
         postWithImageAuthorPage.setPageNumber(postsEntityPage.getPageNumber());
         postWithImageAuthorPage.setPageSize(postsEntityPage.getPageSize());
@@ -101,7 +103,7 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
         postWithImageAuthorPage.setTotalRow(postsEntityPage.getTotalRow());
         // 4.转换PostsEntity到PostWithImageAuthor类型
         List<PostWithImageAuthor> convertedList = page.getRecords().stream().map((postsEntity) -> {
-            System.out.println(postsEntity);
+//            System.out.println(postsEntity);
             PostWithImageAuthor postWithImageAuthor = new PostWithImageAuthor();
             BeanUtils.copyProperties(postsEntity, postWithImageAuthor);
             // 查询作者赋值
@@ -109,7 +111,7 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, PostsEntity> impl
             // 查询图片并赋值
             postWithImageAuthor.setImages(new ArrayList<>());
             postWithImageAuthor.getImages().add(postImagesService.getOne(POST_IMAGES_ENTITY.POST_ID.eq(postsEntity.getPostId())));
-            System.out.println(postWithImageAuthor);
+//            System.out.println(postWithImageAuthor);
             return postWithImageAuthor;
         }).toList();
         postWithImageAuthorPage.setRecords(convertedList);
